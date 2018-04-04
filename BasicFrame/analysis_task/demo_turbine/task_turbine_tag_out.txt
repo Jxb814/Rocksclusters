@@ -1,0 +1,2 @@
+id	desc defaultvalue
+DEMO.DCS2AO.HP_EFF_IS  高压缸内效率     80.00

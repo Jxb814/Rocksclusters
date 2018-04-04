@@ -1,0 +1,6 @@
+id	desc	defaultvalue
+DEMO.DCS2AI.2JZA2226	高压缸入口压力	16.38525
+DEMO.DCS2AI.2JZA2408	高压缸入口温度	538.37
+DEMO.DCS2AI.2JZA2230             高压缸出口压力    	  3.035039
+DEMO.DCS2AI.2JZA2459    高压缸出口温度         313.2931
+DEMO.DCS2AI.2JZA2264    大气压力                                        100.5281       

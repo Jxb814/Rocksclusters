@@ -1,0 +1,3 @@
+id	desc	defaultvalue
+DEMO.DCS2AI.2JZA2214	空预器进口烟气氧量	3.8375
+DEMO.DCS2AI.2JZA2216	空预器出口烟气氧量	4.6476

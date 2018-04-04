@@ -1,0 +1,3 @@
+id	desc defaultvalue
+DEMO.DCS2AO.EXAIRCOFF  空预器进口过量空气系数     1.25
+DEMO.DCS2AO.APHLEAKAGE 空预器漏风系数     0.06
