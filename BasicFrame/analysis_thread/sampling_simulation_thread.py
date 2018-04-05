@@ -11,7 +11,7 @@ import time
 class PeriodSampling():
 
     def __init__(self, delay, tasks):
-        self.tasks = tasks
+        self.tasks = tasks               # tasks is a list[]
         self.delay = delay
         self.next_call = time.time()
   
@@ -24,5 +24,5 @@ class PeriodSampling():
             task.run()
        
         self.next_call = self.next_call + self.delay
-        threading.Timer(self.next_call - time.time(), self.worker).start()
+        threading.Timer(self.next_call - time.time(), self.worker).start()  # after delay time, execute worker
 

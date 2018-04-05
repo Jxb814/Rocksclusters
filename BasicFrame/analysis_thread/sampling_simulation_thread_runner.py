@@ -16,6 +16,7 @@ from analysis_task.demo_turbine.task_turbine_sampling_simulation import UnitHPSi
 
 # TODO：add your module
 from analysis_task.m300exair.task_exair_sampling_simulation import UnitExaircoffSimulation
+from analysis_task.MainSteamFlow.task_steam_sampling_simulation import MainStreamFlowSimulation
 
 if __name__ == "__main__":
 
@@ -34,6 +35,11 @@ if __name__ == "__main__":
 
     Simulation = UnitExaircoffSimulation(taginfile)
     TaskList.append(Simulation)
+    
+    taginfile = os.path.join(analysis_taskpath, "MainSteamFlow", "task_steamflow_tag_in.txt")
+
+    SimulationSteam = MainStreamFlowSimulation(taginfile)
+    TaskList.append(SimulationSteam)
 
 
     OnlineTasks = PeriodSampling(2, TaskList)

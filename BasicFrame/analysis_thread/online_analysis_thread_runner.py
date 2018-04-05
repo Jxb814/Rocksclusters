@@ -16,6 +16,7 @@ from analysis_task.demo_turbine.task_turbine_online_analysis import UnitHP
 
 # TODO: add your module
 from analysis_task.m300exair.task_exair_online_analysis import UnitExaircoff
+from analysis_task.MainSteamFlow.task_steam_online_analysis import MainSteamFlow
 
 if __name__ == "__main__":
 
@@ -36,6 +37,12 @@ if __name__ == "__main__":
 
     TaskExaircoff = UnitExaircoff(taginfile, tagoutfile)
     TaskList.append(TaskExaircoff)
+    
+    taginfile = os.path.join(analysis_taskpath, "MainSteamFlow", "task_steamflow_tag_in.txt")
+    tagoutfile = os.path.join(analysis_taskpath, "MainSteamFlow", "task_steamflow_tag_out.txt")
+
+    TaskSteamFlow = MainSteamFlow(taginfile, tagoutfile)
+    TaskList.append(TaskSteamFlow)
 
     OnlineTasks = PeriodAnalysis(2, TaskList)
     OnlineTasks.setouttag()

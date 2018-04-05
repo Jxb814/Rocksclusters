@@ -1,20 +1,19 @@
 # -*- coding: utf-8 -*-
-"""
-    Author:   Cheng Maohua
-    Email:    cmh@seu.edu.cn
-    License: MIT
-"""
+'''
+Created on 2018年4月5日
 
+@author: user
+'''
 from datetime import datetime
 import codecs
 
 from db.pyredis import TagDefToRedisHashKey, tagvalue_redis, SendToRedisHash
+from analysis_task.MainSteamFlow.pysteamflow import SteamFlow
 
-from analysis_task.demo_turbine.pyturbine import  CylinderEff
-
-class UnitHP:
+class MainSteamFlow:
 
     def __init__(self, tagin, tagout):
+        
         self.ailist = []
    
         file = codecs.open(tagin, 'r', 'utf-8')
@@ -22,7 +21,7 @@ class UnitHP:
             discardline = file.readline()
             for line in  file:
                 tagid, desc, value = line.split()
-                self.ailist.append({'id':tagid, 'desc': desc, 'value': float(value)})  # 'ts':None?
+                self.ailist.append({'id':tagid, 'desc': desc, 'value': float(value)}) 
    
         self.aolist = []
         file = codecs.open(tagout, 'r', 'utf-8')
@@ -30,32 +29,25 @@ class UnitHP:
             discardline = file.readline()
             for line in  file:
                 tagid, desc, value = line.split()
-                self.aolist.append({'id':tagid, 'desc':desc, 'value':None, 'ts':None})  
-
+                self.aolist.append({'id':tagid, 'desc':desc, 'value':None, 'ts':None})
+                
     def setouttag(self):
         TagDefToRedisHashKey(self.aolist)
- 
+        
     def Onlinecal(self):
-        pam = float(self.ailist[4]['value']) / 1000     # air pressure
-     
-        hp = {'inlet':{}, 'outlet':{}, 'h2s':None, 'ef':None}
-        minlet = {'p':None, 't': None, 'h': None, 's':None}
-        moutlet = {'p': None, 't': None, 'h': None, 's': None}
+        RatedState = {}
+        RatedState['p'] = 17.154
+        RatedState['t'] = 514.73
+        RatedState['G'] = 1825.62
 
-        minlet['p'] = float(self.ailist[0]['value']) + pam
-        minlet['t'] = float(self.ailist[1]['value'])
-        moutlet['p'] = float(self.ailist[2]['value']) + pam
-        moutlet['t'] = float(self.ailist[3]['value'])
-
-        hp['inlet'] = dict(minlet)
-        hp['outlet'] = dict(moutlet)
-    
-        hp = CylinderEff(hp)
-    
-        self.aolist[0]['value'] = hp['ef']
-    
-        return hp
-    
+        inletstate = {}
+        inletstate['p'] = float(self.ailist[0]['value'])
+        inletstate['t'] = float(self.ailist[1]['value'])
+        
+        G = SteamFlow(inletstate, RatedState)
+        self.aolist[0]['value'] = G
+        return G
+                
     def run(self):
        
         tagvalue_redis(self.ailist)
@@ -73,3 +65,4 @@ class UnitHP:
         for tag in self.aolist:
             print(tag['desc'], tag['value'])
 
+        

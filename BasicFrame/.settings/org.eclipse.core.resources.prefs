@@ -1,4 +1,17 @@
 eclipse.preferences.version=1
+encoding//analysis_task/MainSteamFlow/pysteamflow.py=utf-8
+encoding//analysis_task/MainSteamFlow/task_steam_online_analysis.py=utf-8
+encoding//analysis_task/MainSteamFlow/task_steam_sampling_simulation.py=utf-8
+encoding//analysis_task/demo_turbine/pyturbine.py=utf-8
+encoding//analysis_task/demo_turbine/task_turbine_online_analysis.py=utf-8
+encoding//analysis_task/demo_turbine/task_turbine_sampling_simulation.py=utf-8
+encoding//analysis_task/m300exair/pyexair.py=utf-8
+encoding//analysis_task/m300exair/task_exair_online_analysis.py=utf-8
+encoding//analysis_task/m300exair/task_exair_sampling_simulation.py=utf-8
+encoding//analysis_thread/online_analysis_thread.py=utf-8
+encoding//analysis_thread/online_analysis_thread_runner.py=utf-8
 encoding//analysis_thread/sampling_simulation_thread.py=utf-8
 encoding//analysis_thread/sampling_simulation_thread_runner.py=utf-8
+encoding//db/pyredis.py=utf-8
 encoding//www/app.py=utf-8
+encoding//www/handler/gen_taginfo.py=utf-8
