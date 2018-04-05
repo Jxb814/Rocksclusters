@@ -14,4 +14,7 @@ encoding//analysis_thread/sampling_simulation_thread.py=utf-8
 encoding//analysis_thread/sampling_simulation_thread_runner.py=utf-8
 encoding//db/pyredis.py=utf-8
 encoding//www/app.py=utf-8
+encoding//www/handler/demo_turbine_handler.py=utf-8
 encoding//www/handler/gen_taginfo.py=utf-8
+encoding//www/handler/m300exair_handler.py=utf-8
+encoding//www/handler/steamrate_handler.py=utf-8

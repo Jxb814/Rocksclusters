@@ -1,0 +1,4 @@
+﻿desc	id	si
+高压缸入口压力	DEMO.DCS2AI.2JZA2226	     MPa
+高压缸入口温度	DEMO.DCS2AI.2JZA2408	     ℃
+主蒸汽流量      DEMO.DCS2AO.MAIN_STEAM_FLOW  t/h

@@ -19,12 +19,14 @@ import www.handler.demo_turbine_handler as demo_turbine
 
 # TODO: import your handler
 import www.handler.m300exair_handler as m300exair
+import www.handler.steamrate_handler as steamrate
 
 def sendmessage2allclient():
     demo_turbine.tb_tag.sendmessage2client()
 
     # TODO: add your task
     m300exair.cur_tag.sendmessage2client()
+    steamrate.tb_tag.sendmessage2client()
 
 class indexHandler(tornado.web.RequestHandler):
 
@@ -41,10 +43,14 @@ class Application(tornado.web.Application):
             # demo handler
             (r"/demo_tb/", demo_turbine.initHandler),
             (r"/demo_tbwebsocket", demo_turbine.WebSocketHandler),
+            
 
             # TODO: add your handler
             (r"/m300exair/", m300exair.initHandler),
             (r"/m300exair_websocket", m300exair.WebSocketHandler),
+            
+            (r"/steamrate/", steamrate.initHandler),
+            (r"/steamrate_websocket", steamrate.WebSocketHandler)
         ]
 
         settings = dict(

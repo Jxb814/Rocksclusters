@@ -12,7 +12,7 @@ def SteamFlow(inletstate, RatedState):
     inletstate['v'] = pt2v(inletstate['p'], inletstate['t'])
     RatedState['v'] = pt2v(RatedState['p'], RatedState['t'])
     
-    inletstate['G'] = {RatedState['G']*inletstate['p']/RatedState['p']
-                       *square(RatedState['p']*RatedState['v']/(inletstate['p']*inletstate['v']))}
+    inletstate['G'] = RatedState['G']*inletstate['p']/RatedState['p']\
+                       *square(RatedState['p']*RatedState['v']/(inletstate['p']*inletstate['v']))
     
     return inletstate['G']

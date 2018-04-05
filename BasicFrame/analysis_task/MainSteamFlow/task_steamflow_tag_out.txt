@@ -1,2 +1,2 @@
 ﻿id	desc defaultvalue
-DEMO.DCS2AO.MAIN_STEAM_FLOW  主蒸汽流量     1200.0
+DEMO.DCS2AO.MAIN_STEAM_FLOW  主蒸汽流量     1800.0
