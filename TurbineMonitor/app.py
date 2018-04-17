@@ -19,11 +19,8 @@ class aboutHandler(tornado.web.RequestHandler):
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
-            (r"/", RealtimePlantHandler.realtimeHandler),
-       
-            (r"/realtime_plant_performance/", RealtimePlantHandler.realtimeHandler),
+            (r"/", RealtimePlantHandler.realtimeHandler),       
             (r"/realtime_plant_turbine/", RealtimeAllTurbineHandler.realtimeHandler),
-          
             (r"/realtime_u2_turbine/", RealtimeU2TuebineHandler.realtimeHandler),
          
             (r"/RedisInfoMonitor/", RedisHandler.RedisInfoHandler),

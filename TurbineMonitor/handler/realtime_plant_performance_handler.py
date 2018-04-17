@@ -65,8 +65,7 @@ class realtimeHandler(tornado.web.RequestHandler):
             received_data.append(rt.rtgdcef[i])
         response_to_send['gdcef'] =received_data
         
-      
-        
+             
         print('Response to return')
         pprint.pprint(response_to_send)
     

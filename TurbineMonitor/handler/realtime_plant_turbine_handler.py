@@ -16,34 +16,35 @@ class realtimeHandler(tornado.web.RequestHandler):
         response_to_send = {}
       
         received_data = list()
-        for element in rt.tagload:            
-            received_data.append(float(element['value'].decode()))
+        for i in range(rt.unitnum):
+            received_data.append(rt.rtload[i])
         response_to_send['load'] =received_data
-       
+    
         received_data = list()
-        for element in rt.tagqms:
-            received_data.append(float(element['value'].decode()))
+        for i in range(rt.unitnum):
+            received_data.append(rt.rtqms[i])
         response_to_send['qms'] =received_data
         
         received_data = list()
-        for element in rt.tagphpin:
-            received_data.append(float(element['value'].decode()))
+        for i in range(rt.unitnum):
+            received_data.append(rt.rtphpin[i])
         response_to_send['phpin'] =received_data
         
         received_data = list()
-        for element in rt.tagthpin:
-            received_data.append(float(element['value'].decode()))
+        for i in range(rt.unitnum):
+            received_data.append(rt.rtthpin[i])
         response_to_send['thpin'] =received_data
         
         received_data = list()
-        for element in rt.tagphpout:
-            received_data.append(float(element['value'].decode()))
-        response_to_send['phpout'] =received_data   
+        for i in range(rt.unitnum):
+            received_data.append(rt.rtphpout[i])
+        response_to_send['phpout'] =received_data
         
         received_data = list()
-        for element in rt.tagthpout:
-            received_data.append(float(element['value'].decode()))
-        response_to_send['thpout'] =received_data   
+        for i in range(rt.unitnum):
+            received_data.append(rt.rtthpout[i])
+        response_to_send['thpout'] =received_data
+       
        
         print('Response to return')
         pprint.pprint(response_to_send)
