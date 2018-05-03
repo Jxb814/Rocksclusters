@@ -1,0 +1,5 @@
+eclipse.preferences.version=1
+encoding//scr/RedisInfoMonitor.py=utf-8
+encoding//scr/realtime_plant_performance.py=utf-8
+encoding//scr/realtime_plant_turbine.py=utf-8
+encoding/ThreadUpdateToRedisHash.py=utf-8

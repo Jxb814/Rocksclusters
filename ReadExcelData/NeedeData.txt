@@ -1,0 +1,60 @@
+一共八级抽汽
+
+一个高压缸 分AB两侧
+一个中压缸
+两个低压缸
+
+高压缸部分：
+
+高压缸进汽压力、温度
+一级抽汽压力、温度
+二级抽汽压力、温度（约等于高压缸排汽）
+
+中压缸部分：
+
+中压缸进汽压力、温度
+
+三级抽汽压力、温度
+四级抽汽压力、温度（中压缸排汽）
+
+低压缸部分：#1和#2
+低压缸进汽压力、温度
+
+#1 五级抽汽压力、温度
+#2 六级抽汽压力、温度
+#2 七级抽汽压力、温度
+#1&2 八级抽汽压力、温度
+
+低压缸排汽压力、温度
+
+全厂：
+发电机有功功率		CSDC.DCS2AI.2JZA1200
+汽轮机热耗率		CSDC.SISCALC.U0_HR***
+汽轮机热耗率(净)	CSDC.SISCALC.U0_NHR**
+
+
+下以2号高压缸为例
+主蒸汽流量		CSDC.DCS2AI.2JZA1080
+A主蒸汽压力      	CSDC.DCS2AI.2JZA1030
+A主汽门前温度 		CSDC.DCS2AI.2JZA2454
+A主汽门后压力 		CSDC.DCS2AI.2JZA2226
+A主汽门后温度 		CSDC.DCS2AI.2JZA2408
+汽机调速级压力（混合)	CSDC.DCS2AI.2JZA0904
+一级抽汽压力  		CSDC.DCS2AI.2JZA2238
+一级抽汽管上壁温	CSDC.DCS2AI.2JZA2471
+（二级抽汽压力		CSDC.DCS2AI.2JZA2240）
+A侧排汽压力   		CSDC.DCS2AI.2JZA2230
+高压缸A排汽温度		CSDC.DCS2AI.2JZA2463
+
+发电机有功功率		CSDC.DCS2AI.2JZA1200
+汽轮机热耗率		CSDC.SISCALC.U2_TBHR*
+汽轮机热耗率(净)	CSDC.SISCALC.U2_TBNHR
+
+给水流量		CSDC.DCS2AI.2JZA0905
+？4个？			CSDC.DCS2AI.2JZA2152
+
+
+
+
+
+
