@@ -7,31 +7,38 @@ import tornado.web
 import tornado.websocket
 import json
 
-import scr.plant as rt
+import scr.GetDataFromRedis as rd
+import app_global as glb
 
-clients_machine_ip = []
-clients_monitor_count = 0
-rhclients = []
+
+clients = []
 
 rowindex = 2
-coldescindex = 1
-colsiindex = 3
-colnameindex = 2
-by_name = u'PLANT'
-s = rt.generalsheet('./cs_tag_all.xlsx', rowindex,
-                    colnameindex, colsiindex, coldescindex, by_name)
+uicoldescindex = 1
+uicolsiindex = 2
+uicolidindex = 3   # 全厂对应id在E列
+
+colvalueindex = 5  # 数据从F列读取
+
+datafile = './cs_tag_all.xlsx'
+sheet_name = u'PLANT'
+uifile = './useful_data.xlsx'
+by_name = u'plant'
+s = rd.generalsheet(datafile, sheet_name, uifile, by_name, rowindex,
+                    uicolidindex, uicolsiindex, uicoldescindex, colvalueindex)  # 开始循环读取数据
 
 
-def rh_gettagdata():
-    tagvaluelist = s.Tagsnapshot()
+
+def gettagdata():
+    tagvaluelist = s.TagSnapshot()
     response_to_send = {}
     response_to_send['value'] = tagvaluelist
     return response_to_send
 
 
 def sendmessage2client():
-    response_to_send = rh_gettagdata()
-    for c in rhclients:
+    response_to_send = gettagdata()
+    for c in clients:
         c.write_message(json.dumps(response_to_send))  # python->json data structure
 
 
@@ -39,13 +46,13 @@ class realtimeHandler(tornado.web.RequestHandler):
 
     def get(self):
         title = '全厂热力系统性能概况'
-        self.tagname = s.GetTagDefFromExcel()
+        self.taglist = s.GetTagDefFromExcel()
 
-        clients_machine_ip.append(self.request.remote_ip)
+        glb.clients_machine_ip.append(self.request.remote_ip)
         print('Client IP:', self.request.remote_ip)
 
-        self.render("realtime_rh_d3_ws.html", title=title,
-                    tagname=self.tagname)
+        self.render("realtime_gen_d3_ws.html", title=title,
+                    tagname=self.taglist)
 
     def post(self):
         pass
@@ -53,23 +60,20 @@ class realtimeHandler(tornado.web.RequestHandler):
 
 class WebSocketHandler(tornado.websocket.WebSocketHandler):
 
-    def check_origin(self, origin):
-        return True
-
     def on_message(self, message):
         print("message received" + message)
 
     def open(self):
-        if self not in rhclients:
-            rhclients.append(self)
+        if self not in clients:
+            clients.append(self)
             self.write_message(u"connected")
-            clients_monitor_count += 1
-            print("PlantRH WS open" + str(len(rhclients)) +
-                  "Total Client: ", str(clients_monitor_count))
+            glb.clients_monitor_count += 1
+            print("GenearalPlant WS open " + str(len(clients)) +
+                  "Total Client: ", str(glb.clients_monitor_count))
 
     def on_close(self):
-        if self in rhclients:
-            rhclients.remove(self)
-            clients_monitor_count -= 1
-            print("PlantRH WS close" + str(len(rhclients)) +
-                  "Total Client: ", str(clients_monitor_count))
+        if self in clients:
+            clients.remove(self)
+            glb.clients_monitor_count -= 1
+            print("GenearalPlant WS close " + str(len(clients)) +
+                  "Total Client: ", str(glb.clients_monitor_count))
