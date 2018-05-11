@@ -68,11 +68,7 @@ class PeriodicSensor ():
         pipe = conn.pipeline()
         for element in tagvaluelist:
             pipe.hmset(element['id'], {'value': element['value'], 'ts': curtime})
-#           print(type(element['value']))
         pipe.execute()
-
-#        print(tagvaluelist[0])
-#        print(conn.hmget(tagvaluelist[0]['id'], 'value'))
 
     def worker(self):
         self.SendToRedisHash()
@@ -84,51 +80,3 @@ def ThreadUpdateBegin(filename, rowindex, colidindex, colvalueindex, sheet_name)
     Sensor = PeriodicSensor(2, filename, rowindex, colidindex,
                             colvalueindex, sheet_name)
     Sensor.worker()
-
-
-'''
-if __name__ == "__main__":
-
-    rowindex = 2
-    colidindex = 2
-    colvalueindex = 5  # F5列
-
-    SensorU1AI = PeriodicSensor(2, u'./cs_tag_all.xlsx', rowindex,
-                                colidindex, colvalueindex, u'DCS1AI')
-    SensorU1AI.worker()
-
-    SensorU1CO = PeriodicSensor(2, u'./cs_tag_all.xlsx', rowindex,
-                                colidindex, colvalueindex, u'1CAL')
-    SensorU1CO.worker()
-
-    colvalueindex = 6  # G6列
-    SensorU2AI = PeriodicSensor(2, u'./cs_tag_all.xlsx', rowindex,
-                                colidindex, colvalueindex, u'DCS2AI')
-    SensorU2AI.worker()
-
-    colvalueindex = 5  # F5列
-    SensorU2CO = PeriodicSensor(2, u'./cs_tag_all.xlsx', rowindex,
-                                colidindex, colvalueindex, u'2CAL')
-    SensorU2CO.worker()
-
-    SensorU3AI = PeriodicSensor(2, u'./cs_tag_all.xlsx', rowindex,
-                                colidindex, colvalueindex, u'DCS3AI')
-    SensorU3AI.worker()
-
-    SensorU3CO = PeriodicSensor(2, u'./cs_tag_all.xlsx', rowindex,
-                                colidindex, colvalueindex, u'3CAL')
-    SensorU3CO.worker()
-
-    SensorU4AI = PeriodicSensor(2, u'./cs_tag_all.xlsx', rowindex,
-                                colidindex, colvalueindex, u'DCS4AI')
-    SensorU4AI.worker()
-
-    SensorU4CO = PeriodicSensor(2, u'./cs_tag_all.xlsx', rowindex,
-                                colidindex, colvalueindex, u'4CAL')
-    SensorU4CO.worker()
-
-    SensorPLTCO = PeriodicSensor(2, u'./cs_tag_all.xlsx', rowindex,
-                                 colidindex, colvalueindex, u'PLANT')
-    SensorPLTCO.worker()
-    
-'''

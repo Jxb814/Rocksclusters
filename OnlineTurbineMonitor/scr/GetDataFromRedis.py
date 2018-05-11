@@ -24,25 +24,31 @@ class generalsheet():
         self.table = self.usefuldata.sheet_by_name(by_name)
         self.by_name = by_name
         self.nrows = self.table.nrows   # number of rows
-        self.taglist = self.excel_tagdef_table()
+        self.taglist = self.excel_tagdef()
         self.tagcount = len(self.taglist)
     # cs_tag_all 和 usefuldata 中id列号与si列号相反
         colidindex = uicolsiindex
         db.ThreadUpdateBegin(datafile, rowindex, colidindex,
                              colvalueindex, sheet_name)      # 开始循环读取数据
 
-    def excel_tagdef_table(self):
-        '''
-        first send def data, when redis is empty
-        '''
+    def excel_tagdef(self):
         taglist = []
         for rownum in range(self.rowindex, self.nrows):
-            tag = {'desc': u'', 'id': u'', 'si': u'', 'value': '-1000'}
+            tag = {'desc': u'', 'id': u'', 'si': u'', 'value': '-1000',
+                   'x': 20, 'y': 20, 'fig': 0, 'tab': 0}
             tag['id'] = self.table.cell(rownum, self.uicolidindex).value
             tag['desc'] = self.table.cell(rownum, self.uicoldescindex).value
             tag['si'] = self.table.cell(rownum, self.uicolsiindex).value
+
+            tag['x'] = self.table.cell(rownum, 8).value
+            tag['y'] = self.table.cell(rownum, 9).value
+
+            tag['fig'] = self.table.cell(rownum, 10).value
+            tag['tab'] = self.table.cell(rownum, 11).value
+
             taglist.append(tag)
-#           print(taglist[rownum - self.rowindex]['id'])
+
+            print(taglist[rownum - self.rowindex]['id'])
 
         return taglist
 
@@ -55,8 +61,9 @@ class generalsheet():
         '''
         pipe = conn.pipeline()
         for element in self.taglist:
+            print(element)
             pipe.hget(element['id'], 'value')
-        tagvaluelist = pipe.execute()    # ordered list 只有value值 string类型
+        tagvaluelist = pipe.execute()    # ordered list 只有value值 string类型)
 
         i = 0
         for i in range(self.tagcount):
@@ -77,18 +84,12 @@ class generalsheet():
 
         flttagvaluelist = list()
         for element in tagvaluelist:
-            flttagvaluelist.append(float(element))
-
-#        print (tagvaluelist[self.tagcount-1])
+            if element is not None:
+                flttagvaluelist.append(float(element))
+            else:
+                flttagvaluelist.append(element)
 
         return flttagvaluelist
-
-    def id_valueMatch(self):
-        tagdict = {}
-        for i in range(self.tagcount):
-            if self.taglist[i]['value'] is not None:
-                tagdict[self.taglist[i]['id']] = float(self.taglist[i]['value'])
-        return tagdict
 
     def desc_valueMatch(self):
         tagdict = {}
@@ -98,9 +99,8 @@ class generalsheet():
         return tagdict
 
     def calculation(self):
-        if self.by_name == u'rh':
+        if self.by_name == u'rh_draw':
             HP = UnitHP(self)
             self.taglist = HP.HeatRateCaculation()
- #           HP.SendToRedisHash()
         else:
             pass

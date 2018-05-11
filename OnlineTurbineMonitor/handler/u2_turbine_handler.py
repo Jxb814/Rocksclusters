@@ -22,7 +22,7 @@ colvalueindex = 6  # 数据从G列开始读取
 datafile = './cs_tag_all.xlsx'
 sheet_name = u'DCS2AI'
 uifile = './useful_data.xlsx'
-by_name = u'rh'
+by_name = u'rh_draw'
 s = rd.generalsheet(datafile, sheet_name, uifile, by_name, rowindex,
                     uicolidindex, uicolsiindex, uicoldescindex, colvalueindex)  # 开始循环读取数据
 
@@ -49,8 +49,8 @@ class realtimeHandler(tornado.web.RequestHandler):
         glb.clients_machine_ip.append(self.request.remote_ip)
         print('Client IP:', self.request.remote_ip)
 
-        self.render("realtime_rh_d3_ws.html", title=title,
-                    tagname=self.taglist)
+        self.render("realtime_HPturbine.html", title=title,
+                    tagname=self.taglist, devices='unit2')
 
     def post(self):
         pass
@@ -67,11 +67,11 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
             self.write_message(u"connected")
             glb.clients_monitor_count += 1
             print("TurbineUnit2 WS open " + str(len(clients)) +
-                  "Total Client: ", str(glb.clients_monitor_count))
+                  " Total Client: ", str(glb.clients_monitor_count))
 
     def on_close(self):
         if self in clients:
             clients.remove(self)
             glb.clients_monitor_count -= 1
             print("TurbineUnit2 WS close " + str(len(clients)) +
-                  "Total Client: ", str(glb.clients_monitor_count))
+                  " Total Client: ", str(glb.clients_monitor_count))

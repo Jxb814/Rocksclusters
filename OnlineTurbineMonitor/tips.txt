@@ -1,4 +1,0 @@
-1.把cs_tag_all.xlsx的数据都放进redis里
-2.只取需要显示的以及有用的数据，需要的数据通过useful_data.xlsx定义
-runapp.py只负责handler链接
-handler中进行读取数据和运算

@@ -10,26 +10,41 @@
      <script src="/static/js/jquery.js" type="text/javascript"></script>  
      <script src="/static/js/bootstrap.js" type="text/javascript"></script>   
      <script src="/static/js/d3.js" type="text/javascript"></script>  
-    
+
+     <script type="text/javascript" src="/static/js/sis/processfig_rh_def.js"></script>    
    	 <script type="text/javascript"> 
    
    	  var taglist=new Array();
       var tabletaglist=new Array();
+      var figtaglist=new Array();
       
       {% for item in tagname %}
            var obj=new Object();
  		   obj.tagdesc="{{item['desc']}}";
            obj.tagunit="{{item['si']}}";
  	   	   obj.value="{{item['value']}}";
+
+ 	   	   obj.x="{{item['x']}}";
+ 		   obj.y="{{item['y']}}";
  		  
+ 		   obj.fig="{{item['fig']}}";
+ 		   obj.tab="{{item['tab']}}";
+ 		   		  
  		   taglist.push(obj);
- 		   tabletaglist.push(obj);
+ 		   
+ 		   if (obj.tab==1.0) tabletaglist.push(obj);
+		   if (obj.fig==1.0) figtaglist.push(obj);
  	    {% end %}
-  	   
- 	    ws = new WebSocket("ws://" + window.location.host + "/u2twebsocket");
+ 	   
+ 	  {% if devices=='unit1' %}			
+ 	       ws = new WebSocket("ws://" + window.location.host + "/u1twebsocket");
+        {% end %}
+      {% if devices=='unit2' %}		
+           ws = new WebSocket("ws://" + window.location.host + "/u2twebsocket");
+        {% end %}
  	 
  	 </script>
- <script type="text/javascript" src="/static/js/ws.js"></script>
+<script type="text/javascript" src="/static/js/sis/ws.js"></script>
 
 </head>
 <body id="bootstrap-js">
@@ -47,14 +62,18 @@
          </div>
       </div>
 
-      <div class="offset4 span4">
-    	 <div>
-    	      <span id="tag"></span>
-    	      <script type="text/javascript" src="/static/js/taglist_visual.js" ></script>
-  	     </div>
+      <div class="row-fluid" id="responsefield">
+          <div class="span9"><span id="svg_device"></span>
+               <script type="text/javascript" src="/static/js/sis/processfig_rh_draw.js"></script>
+		       <script type="text/javascript" src="/static/js/sis/processfig_figtag_draw.js"> 	</script>
+		 </div>
+		 <div class="span3" >
+		     <span id="tag"></span>  
+    	     <script type="text/javascript" src="/static/js/sis/taglist_label.js" ></script>
+		 </div>			 
   	 </div>
- </div>
-
+ </div>	 
+ 
 <footer>
       <div class="container">
         <p class="muted credit pull-right"><a href="http://www.seu.edu.cn"> 东南大学  能源与环境学院 </a> 2018</p>
