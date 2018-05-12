@@ -17,12 +17,12 @@
    	  var taglist=new Array();
       var tabletaglist=new Array();
       var figtaglist=new Array();
+      var dataset = new Array();
       
       {% for item in tagname %}
            var obj=new Object();
  		   obj.tagdesc="{{item['desc']}}";
            obj.tagunit="{{item['si']}}";
- 	   	   obj.value="{{item['value']}}";
 
  	   	   obj.x="{{item['x']}}";
  		   obj.y="{{item['y']}}";
@@ -70,7 +70,7 @@
 		 <div class="span3" >
 		     <span id="tag"></span>  
     	     <script type="text/javascript" src="/static/js/sis/taglist_label.js" ></script>
-		 </div>			 
+		 </div>		
   	 </div>
  </div>	 
  

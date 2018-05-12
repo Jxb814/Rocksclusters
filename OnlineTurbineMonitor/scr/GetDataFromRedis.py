@@ -63,7 +63,7 @@ class generalsheet():
         for element in self.taglist:
             print(element)
             pipe.hget(element['id'], 'value')
-        tagvaluelist = pipe.execute()    # ordered list 只有value值 string类型)
+        tagvaluelist = pipe.execute()    # ordered list 只有value值 string类型
 
         i = 0
         for i in range(self.tagcount):
@@ -82,14 +82,14 @@ class generalsheet():
             self.taglist[i]['value'] = tagvaluelist[i]
             i += 1                     # taglist中 id与value对应
 
-        flttagvaluelist = list()
+        flttagvalue = list()
         for element in tagvaluelist:
-            if element is not None:
-                flttagvaluelist.append(float(element))
-            else:
-                flttagvaluelist.append(element)
+            try:
+                flttagvalue.append(float(element))
+            except:
+                flttagvalue.append(-1000.0)
 
-        return flttagvaluelist
+        return flttagvalue
 
     def desc_valueMatch(self):
         tagdict = {}
